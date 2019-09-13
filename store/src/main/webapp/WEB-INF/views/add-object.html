@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Add Game Object</title>
+</head>
+
+<body>
+
+	<form action="#" th:action="@{'/object/add/'+ ${gameId}}"
+		th:object="${gameObject}" method="post">
+		<p>
+			Title game object: <input type="text" th:field="*{title}" />
+		</p>
+		<p>
+			Text game object: <input type="text" th:field="*{text}" />
+		</p>
+		<p>
+			<input type="submit" value="Add object" /> <input type="reset"
+				value="Reset" />
+		</p>
+	</form>
+</body>
+
+</html>

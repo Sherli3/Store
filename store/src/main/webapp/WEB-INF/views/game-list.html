@@ -22,6 +22,7 @@
 				<td>Name</td>
 				<td>edit</td>
 				<td>delete</td>
+				<td>Add Game Object</td>
 			</tr>
 		</thead>
 
@@ -32,6 +33,8 @@
 				<td><a th:href="@{'/games/edit/'+ ${list.id}}"
 					class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 				<td><a th:href="@{'/games/delete/'+ ${list.id}}"
+					class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+					<td><a th:href="@{'/object/add/'+ ${list.id}}"
 					class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 			</tr>
 		</tbody></table>
