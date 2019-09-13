@@ -8,10 +8,10 @@
 </head>
 
 <body>
-
-	<form action="#" th:action="@{/games/add}" th:object="${game}" method="post">
+	<form action="#" th:action="@{/games/add}" th:object="${game}"
+		method="post">
 		<p>
-			Name game: <input type="text" th:field="*{gameName}" />
+			Name game object: <input type="text" th:field="*{gameName}" />
 		</p>
 		<p>
 			<input type="submit" value="Add Game" /> <input type="reset"

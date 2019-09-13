@@ -27,11 +27,13 @@ import store.configuration.service.GameService;
 @Controller
 @RequestMapping("/object")
 public class GameObjectController {
+	
 
 	@Autowired
 	private GameObjectService gameObjectService;
 	@Autowired
 	private GameService gameService;
+	private Date date = new Date();
 
 	@RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
 	public ModelAndView registrationGame(@PathVariable("id") Integer id) {
@@ -44,7 +46,7 @@ public class GameObjectController {
 			modelAndView.setViewName("add-object");
 			return modelAndView;
 		}
-
+		modelAndView.setViewName("error");
 		return modelAndView;
 	}
 
@@ -54,7 +56,6 @@ public class GameObjectController {
 		if (result.hasErrors()) {
 			return "error";
 		}
-		Date date = new Date();
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
 		gameObject.setStatus(Status.PENDING);
@@ -64,6 +65,39 @@ public class GameObjectController {
 		return "redirect:/games/list/";
 	}
 
-	
+	@RequestMapping("/list")
+	public String listGames(Model model) {
+		List<GameObject> listObject = gameObjectService.getGamesObject();
+		model.addAttribute("listObject", listObject);
+		return "object-list";
+	}
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String editGameGet(@PathVariable("id") Integer id, Model model) {
+		gameObjectService.getGameObject(id).ifPresent(idObj -> model.addAttribute("gameObject", idObj));
+		model.addAttribute("statusType", Status.values());
+		return "object-edit-admin";
+	}
+
+	@RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
+	public String editGame(@Valid @ModelAttribute("gameObject") GameObject gameObj, BindingResult result) {
+		if (result.hasErrors()) {
+			return "error";
+		}
+		long time = date.getTime();
+		Timestamp ts = new Timestamp(time);
+		gameObj.setUpdateAt(ts);
+		gameObjectService.saveGameObject(gameObj);
+		
+		return "redirect:/object/list/";
+	}
+
+	@RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
+	public String deleteGame(@PathVariable("id") Integer id) {
+		Optional<GameObject> gameObj = gameObjectService.getGameObject(id);
+		gameObj.ifPresent(o -> gameObjectService.deleteGameObject(o.getId()));
+
+		return "redirect:/object/list/";
+	}
 
 }
