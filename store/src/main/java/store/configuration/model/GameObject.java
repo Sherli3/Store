@@ -39,7 +39,7 @@ public class GameObject {
 	private Timestamp creatdAt;
 	@Column(name = "updated_at")
 	private Timestamp updateAt;
-	@OneToOne//(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "game_id")
 	private Game game;
 
