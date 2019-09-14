@@ -19,10 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Autowired
 	   private ApplicationContext applicationContext;
-
-	   /*
-	    * STEP 1 - Create SpringResourceTemplateResolver
-	    * */
 	   @Bean
 	   public SpringResourceTemplateResolver templateResolver() {
 	      SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -31,10 +27,6 @@ public class WebConfig implements WebMvcConfigurer {
 	      templateResolver.setSuffix(".html");
 	      return templateResolver;
 	   }
-
-	   /*
-	    * STEP 2 - Create SpringTemplateEngine
-	    * */
 	   @Bean
 	   public SpringTemplateEngine templateEngine() {
 	      SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -42,10 +34,6 @@ public class WebConfig implements WebMvcConfigurer {
 	      templateEngine.setEnableSpringELCompiler(true);
 	      return templateEngine;
 	   }
-
-	   /*
-	    * STEP 3 - Register ThymeleafViewResolver
-	    * */
 	   @Override
 	   public void configureViewResolvers(ViewResolverRegistry registry) {
 	      ThymeleafViewResolver resolver = new ThymeleafViewResolver();

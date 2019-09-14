@@ -28,7 +28,6 @@ import store.configuration.service.GameService;
 @RequestMapping("/object")
 public class GameObjectController {
 	
-
 	@Autowired
 	private GameObjectService gameObjectService;
 	@Autowired

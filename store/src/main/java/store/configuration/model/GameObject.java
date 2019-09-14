@@ -1,7 +1,7 @@
 package store.configuration.model;
 
 import java.sql.Timestamp;
-import java.util.Optional;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,14 +13,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = { "title", "text", "status", "creatdAt", "updateAt" })
 @Entity
 @Table(name = "game_object")
 public class GameObject {
@@ -33,7 +36,7 @@ public class GameObject {
 	@Column(name = "text_object", columnDefinition = "TEXT")
 	private String text;
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status_object")//, nullable = false)
+	@Column(name = "status_object", nullable = false)
 	private Status status;
 	@Column(name = "created_at")
 	private Timestamp creatdAt;
@@ -42,6 +45,7 @@ public class GameObject {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "game_id")
 	private Game game;
-
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "gameObject")
+	private List<Comment> comments;
 
 }
