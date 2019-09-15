@@ -9,7 +9,9 @@
 
 <body>
 
-	<form action="#" th:action="@{'/object/add/'+ ${gameId}}"
+	<!--  <form action="#" th:action="@{'/object/add/'+ ${objectId}}"-->
+
+	<form action="#" th:action="@{/object/addObject}"
 		th:object="${gameObject}" method="post">
 		<p>
 			Title game object: <input type="text" th:field="*{title}" />
@@ -17,6 +19,7 @@
 		<p>
 			Text game object: <input type="text" th:field="*{text}" />
 		</p>
+		<input type="hidden" th:field="*{game.id}" />
 		<p>
 			<input type="submit" value="Add object" /> <input type="reset"
 				value="Reset" />
