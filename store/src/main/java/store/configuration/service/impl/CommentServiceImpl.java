@@ -1,5 +1,6 @@
 package store.configuration.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class CommentServiceImpl implements CommentService {
 	public void deleteComment(int id) {
 		commentRepository.deleteById(id);
 
+	}
+
+	@Override
+	public List<Comment> findAllApprovedComments() {
+		return commentRepository.findAllApprovedComments();
 	}
 
 }
