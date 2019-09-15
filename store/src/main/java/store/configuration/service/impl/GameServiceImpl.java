@@ -25,19 +25,19 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public void saveGame(Game game) {
-		gameRepository.save(game);
+		gameRepository.saveAndFlush(game);
 
 	}
 
 	@Override
-	public  Optional<Game> getGame(int id) {
+	public Optional<Game> getGame(int id) {
 		return gameRepository.findById(id);
 	}
 
 	@Override
 	public void deleteGame(int id) {
 		gameRepository.deleteById(id);
-		
+
 	}
 
 }

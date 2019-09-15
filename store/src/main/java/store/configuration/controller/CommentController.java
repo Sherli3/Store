@@ -8,11 +8,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import store.configuration.model.Comment;
@@ -35,8 +36,8 @@ public class CommentController {
 		Optional<GameObject> findGameObject = gameObjectService.getGameObject(id);
 		if (findGameObject.isPresent()) {
 			Comment newComment = new Comment();
+			newComment.setGameObject(findGameObject.get());
 			modelAndView.addObject("newComment", newComment);
-			modelAndView.addObject("objectId", id);
 			modelAndView.setViewName("add-comment");
 			return modelAndView;
 
@@ -46,18 +47,17 @@ public class CommentController {
 		return modelAndView;
 	}
 
-	@RequestMapping(path = "/add/{id}", method = RequestMethod.POST)
-	public String saveNewComment(@Valid @ModelAttribute("newComment") Comment comment,
-			@ModelAttribute("objectId") GameObject objectId, BindingResult result) {
+	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
+	public String saveNewComment(@Valid Comment newComment, @RequestParam(defaultValue = "false") Boolean approved,
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "error";
 		}
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
-		comment.setApproved(false);
-		comment.setCreatedAt(ts);
-		comment.setGameObject(objectId);
-		commentService.saveComment(comment);
+		newComment.setCreatedAt(ts);
+		newComment.setApproved(approved);
+		commentService.saveComment(newComment);
 
 		return "redirect:/games/list/";
 	}

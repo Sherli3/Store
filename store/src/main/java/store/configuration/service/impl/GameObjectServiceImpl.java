@@ -24,7 +24,7 @@ public class GameObjectServiceImpl implements GameObjectService {
 
 	@Override
 	public void saveGameObject(GameObject gameObject) {
-		gameObjectRepository.save(gameObject);
+		gameObjectRepository.saveAndFlush(gameObject);
 
 	}
 
