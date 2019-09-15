@@ -9,11 +9,16 @@
 
 <body>
 
-	<form action="#" th:action="@{'/comment/add/'+ ${objectId}}"
+	<form action="#" th:action="@{/comment/addComment}"
 		th:object="${newComment}" method="post">
 		<p>
 			Message: <input type="text" th:field="*{message}" />
 		</p>
+		<p>
+			<input type="checkbox" name="approved" />
+		</p>
+		<input type="hidden" th:field="*{gameObject.id}" />
+
 		<p>
 			<input type="submit" value="Add object" /> <input type="reset"
 				value="Reset" />

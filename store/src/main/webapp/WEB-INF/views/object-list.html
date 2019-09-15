@@ -26,7 +26,6 @@
 				<td>status</td>
 				<td>created at</td>
 				<td>update at</td>
-				<td>Game</td>
 				<td>Edit Game Object</td>
 				<td>Delete Game Object</td>
 				<td>Add comment</td>
@@ -42,7 +41,6 @@
 				<td th:text="${list.status}" />
 				<td th:text="${list.creatdAt}" />
 				<td th:text="${list.updateAt}" />
-				<td th:text="${list.game}" />
 				<td><a th:href="@{'/object/edit/'+ ${list.id}}"
 					class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
 				<td><a th:href="@{'/object/delete/'+ ${list.id}}"
