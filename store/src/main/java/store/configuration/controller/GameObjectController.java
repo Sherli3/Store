@@ -27,7 +27,7 @@ import store.configuration.service.GameService;
 @Controller
 @RequestMapping("/object")
 public class GameObjectController {
-	
+
 	@Autowired
 	private GameObjectService gameObjectService;
 	@Autowired
@@ -39,27 +39,27 @@ public class GameObjectController {
 		ModelAndView modelAndView = new ModelAndView("");
 		Optional<Game> findGame = gameService.getGame(id);
 		if (findGame.isPresent()) {
-			GameObject game = new GameObject();
-			modelAndView.addObject("gameObject", game);
-			modelAndView.addObject("gameId", id);
+			GameObject gameObject = new GameObject();
+			gameObject.setGame(findGame.get());
+			modelAndView.addObject("gameObject", gameObject);
 			modelAndView.setViewName("add-object");
 			return modelAndView;
 		}
+
 		modelAndView.setViewName("error");
 		return modelAndView;
 	}
 
-	@RequestMapping(path = "/add/{id}", method = RequestMethod.POST)
-	public String createNewGame(@Valid @ModelAttribute("gameObject") GameObject gameObject,
-			@ModelAttribute("gameId") Game gameId, BindingResult result, ModelMap model) {
+	@RequestMapping(path = "/addObject", method = RequestMethod.POST)
+	public String createNewGame(@Valid GameObject gameObject, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "error";
 		}
+
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
 		gameObject.setStatus(Status.PENDING);
 		gameObject.setCreatdAt(ts);
-		gameObject.setGame(gameId);
 		gameObjectService.saveGameObject(gameObject);
 		return "redirect:/games/list/";
 	}
@@ -87,7 +87,7 @@ public class GameObjectController {
 		Timestamp ts = new Timestamp(time);
 		gameObj.setUpdateAt(ts);
 		gameObjectService.saveGameObject(gameObj);
-		
+
 		return "redirect:/object/list/";
 	}
 
@@ -95,7 +95,6 @@ public class GameObjectController {
 	public String deleteGame(@PathVariable("id") Integer id) {
 		Optional<GameObject> gameObj = gameObjectService.getGameObject(id);
 		gameObj.ifPresent(o -> gameObjectService.deleteGameObject(o.getId()));
-
 		return "redirect:/object/list/";
 	}
 
