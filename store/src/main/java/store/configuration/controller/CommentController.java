@@ -83,11 +83,21 @@ public class CommentController {
 		comment.ifPresent(c -> commentService.deleteComment(c.getId()));
 		return "redirect:/object/list/";
 	}
+
 	@RequestMapping("/list")
-	public String listGames(Model model) {
+	public String listComment(Model model) {
 		List<Comment> listComment = commentService.findAllApprovedComments();
 		model.addAttribute("listComment", listComment);
 		return "comment-list";
+	}
+
+	@RequestMapping(path = "/list/{id}", method = RequestMethod.GET)
+	public String objectListComments(@PathVariable("id") Integer id, Model model) {
+		Optional<GameObject> findGameObject = gameObjectService.getGameObject(id);
+		List<Comment> listComment = commentService.findAllCommentsByObjectId(findGameObject.get());
+		model.addAttribute("listComment", listComment);
+		return "comment-list";
+
 	}
 
 }

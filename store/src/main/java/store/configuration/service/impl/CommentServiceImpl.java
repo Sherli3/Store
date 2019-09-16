@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import store.configuration.model.Comment;
+import store.configuration.model.GameObject;
 import store.configuration.service.CommentService;
 import store.configuration.repository.CommentRepository;
 
@@ -36,6 +37,11 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> findAllApprovedComments() {
 		return commentRepository.findAllApprovedComments();
+	}
+
+	@Override
+	public List<Comment> findAllCommentsByObjectId(GameObject objectId) {
+		return commentRepository.findAllCommentsByObjectId(objectId);
 	}
 
 }
