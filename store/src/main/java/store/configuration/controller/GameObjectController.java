@@ -25,7 +25,7 @@ import store.configuration.service.GameObjectService;
 import store.configuration.service.GameService;
 
 @Controller
-@RequestMapping("/object")
+@RequestMapping("/trader")
 public class GameObjectController {
 
 	@Autowired
@@ -71,10 +71,16 @@ public class GameObjectController {
 		return "object-list";
 	}
 
+	@RequestMapping("/list/all")
+	public String listGamesVer(Model model) {
+		List<GameObject> listObject = gameObjectService.findAllVerifiedObjects();
+		model.addAttribute("listObject", listObject);
+		return "object-list";
+	}
+
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editGameGet(@PathVariable("id") Integer id, Model model) {
 		gameObjectService.getGameObject(id).ifPresent(idObj -> model.addAttribute("gameObject", idObj));
-		//model.addAttribute("statusType", Status.values());
 		return "object-edit";
 	}
 

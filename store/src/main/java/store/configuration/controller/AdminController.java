@@ -1,5 +1,6 @@
 package store.configuration.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -69,5 +70,11 @@ public class AdminController {
 		return "redirect:/object/list/";
 	}
 	
+	@RequestMapping("/list/object/unverified")
+	public String listGames(Model model) {
+		List<GameObject> listObject = gameObjectService.findAllUnverifiedObjects();
+		model.addAttribute("listObject", listObject);
+		return "object-list";
+	}
 
 }

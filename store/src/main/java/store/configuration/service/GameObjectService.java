@@ -14,4 +14,8 @@ public interface GameObjectService {
 
 	public void deleteGameObject(int id);
 
+	public List<GameObject> findAllVerifiedObjects();
+
+	public List<GameObject> findAllUnverifiedObjects();
+
 }

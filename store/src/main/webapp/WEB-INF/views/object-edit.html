@@ -9,7 +9,7 @@
 
 <body>
 
-	<form action="#" th:action="@{'/object/edit/'+ ${gameObject.id}}"
+	<form action="#" th:action="@{'/trader/edit/'+ ${gameObject.id}}"
 		th:object="${gameObject}" method="post">
 		<p>
 			Title game object: <input type="text" th:field="*{title}" />

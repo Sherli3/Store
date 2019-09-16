@@ -39,4 +39,14 @@ public class GameObjectServiceImpl implements GameObjectService {
 
 	}
 
+	@Override
+	public List<GameObject> findAllVerifiedObjects() {
+		return gameObjectRepository.findAllVerifiedObjects();
+	}
+
+	@Override
+	public List<GameObject> findAllUnverifiedObjects() {
+		return gameObjectRepository.findAllUnverifiedObjects();
+	}
+
 }
