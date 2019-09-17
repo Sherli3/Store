@@ -42,6 +42,9 @@ public class GameObject {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "gameObject")
 	private List<Comment> comments;
 	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	@ManyToOne
 	@JoinColumn(name = "game_id")
 	private Game game;
 
