@@ -17,7 +17,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(exclude = { "message", "createdAt", "approved" })
 @Entity
 @Table(name = "comment")
