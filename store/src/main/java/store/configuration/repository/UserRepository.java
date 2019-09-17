@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 import store.configuration.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
 
 	public User findByEmail(String email);
-	
+
+	public User findByActiveCode(String code);
 
 }
