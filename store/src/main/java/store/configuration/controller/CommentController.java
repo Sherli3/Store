@@ -1,5 +1,6 @@
 package store.configuration.controller;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import store.configuration.model.Comment;
 import store.configuration.model.GameObject;
+import store.configuration.model.User;
 import store.configuration.service.CommentService;
 import store.configuration.service.GameObjectService;
+import store.configuration.service.impl.UserService;
 
 @Controller
 @RequestMapping("/comment")
@@ -29,6 +32,8 @@ public class CommentController {
 	private CommentService commentService;
 	@Autowired
 	private GameObjectService gameObjectService;
+	@Autowired
+	private UserService userService;
 	private Date date = new Date();
 
 	@RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
@@ -49,14 +54,16 @@ public class CommentController {
 	}
 
 	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
-	public String saveNewComment(@Valid Comment newComment, BindingResult result, Model model) {
+	public String saveNewComment(@Valid Comment newComment, BindingResult result, Model model, Principal principal) {
 		if (result.hasErrors()) {
 			return "error";
 		}
+		User user = userService.findByEmail(principal.getName());
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
 		newComment.setCreatedAt(ts);
 		newComment.setApproved(false);
+		newComment.setAuthor(user);
 		commentService.saveComment(newComment);
 
 		return "redirect:/games/list/";

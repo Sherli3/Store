@@ -76,5 +76,12 @@ public class AdminController {
 		model.addAttribute("listObject", listObject);
 		return "object-list";
 	}
+	
+	@RequestMapping("/list/comment/unapproved")
+	public String listCommentUnapproved(Model model) {
+		List<Comment> list = commentService.findAllUnapprovedComments();
+		model.addAttribute("listComment", list);
+		return "comment-list";
+	}
 
 }

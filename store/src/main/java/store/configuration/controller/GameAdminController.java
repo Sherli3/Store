@@ -40,7 +40,7 @@ public class GameAdminController {
 			return "error";
 		}
 		gameService.saveGame(game);
-		return "redirect:/games/list/";
+		return "redirect:/admin/games/list/";
 	}
 
 	@RequestMapping("/list")
@@ -64,8 +64,8 @@ public class GameAdminController {
 		gameService.saveGame(game);
 		return "redirect:/games/list/";
 	}
-	
-	@RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
+
+	@RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
 	public String deleteGame(@PathVariable("id") Integer id) {
 		Optional<Game> game = gameService.getGame(id);
 		game.ifPresent(o -> gameService.deleteGame(o.getId()));

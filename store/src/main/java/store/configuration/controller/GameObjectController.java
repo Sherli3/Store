@@ -1,5 +1,6 @@
 package store.configuration.controller;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 import store.configuration.model.Game;
 import store.configuration.model.GameObject;
 import store.configuration.model.Status;
+import store.configuration.model.User;
 import store.configuration.service.GameObjectService;
 import store.configuration.service.GameService;
+import store.configuration.service.impl.UserService;
 
 @Controller
 @RequestMapping("/trader")
@@ -32,6 +35,8 @@ public class GameObjectController {
 	private GameObjectService gameObjectService;
 	@Autowired
 	private GameService gameService;
+	@Autowired
+	private UserService userService;
 	private Date date = new Date();
 
 	@RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
@@ -51,15 +56,17 @@ public class GameObjectController {
 	}
 
 	@RequestMapping(path = "/addObject", method = RequestMethod.POST)
-	public String createNewGame(@Valid GameObject gameObject, BindingResult result, ModelMap model) {
+	public String createNewGame(@Valid GameObject gameObject, BindingResult result, ModelMap model,
+			Principal principal) {
 		if (result.hasErrors()) {
 			return "error";
 		}
-
+		User user = userService.findByEmail(principal.getName());
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
 		gameObject.setStatus(Status.PENDING);
 		gameObject.setCreatdAt(ts);
+		gameObject.setUser(user);
 		gameObjectService.saveGameObject(gameObject);
 		return "redirect:/games/list/";
 	}
@@ -85,23 +92,26 @@ public class GameObjectController {
 	}
 
 	@RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
-	public String editGame(@Valid @ModelAttribute("gameObject") GameObject gameObj, BindingResult result) {
+	public String editGame(@Valid @ModelAttribute("gameObject") GameObject gameObj, BindingResult result,
+			Principal principal) {
 		if (result.hasErrors()) {
 			return "error";
 		}
+		User user = userService.findByEmail(principal.getName());
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
 		gameObj.setUpdateAt(ts);
+		gameObj.setUser(user);
 		gameObjectService.saveGameObject(gameObj);
 
-		return "redirect:/object/list/";
+		return "redirect:/trader/list/";
 	}
 
-	@RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
 	public String deleteGame(@PathVariable("id") Integer id) {
 		Optional<GameObject> gameObj = gameObjectService.getGameObject(id);
 		gameObj.ifPresent(o -> gameObjectService.deleteGameObject(o.getId()));
-		return "redirect:/object/list/";
+		return "redirect:/trader/list/";
 	}
 
 }
