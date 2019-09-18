@@ -1,12 +1,22 @@
 package store.configuration.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "game")
 public class Game {
@@ -14,46 +24,11 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "game_id")
 	private int id;
+	@Length(min = 3, message = "*Game ust have at least 3 characters")
+	@NotEmpty(message = "*Please write game")
 	@Column(name = "game_name")
 	private String gameName;
-	public Game(){
-		
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getGameName() {
-		return gameName;
-	}
-	public void setGameName(String gameName) {
-		this.gameName = gameName;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((gameName == null) ? 0 : gameName.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Game other = (Game) obj;
-		if (gameName == null) {
-			if (other.gameName != null)
-				return false;
-		} else if (!gameName.equals(other.gameName))
-			return false;
-		return true;
-	}
-	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "game")
+	private List<GameObject> object;
 
 }

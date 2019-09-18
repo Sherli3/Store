@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Edit Game Object</title>
+</head>
+
+<body>
+
+	<form action="#" th:action="@{'/trader/edit/'+ ${gameObject.id}}"
+		th:object="${gameObject}" method="post">
+		<p>
+			Title game object: <input type="text" th:field="*{title}" />
+		</p>
+		<p>
+			Text game object: <input type="text" th:field="*{text}" />
+		</p>
+		<p>
+			<input type="hidden" th:field="*{game.id}" /> <input type="hidden"
+				th:field="*{creatdAt}" /> <input type="hidden"
+				th:field="*{status}" />
+		</p>
+		<p>
+			<input type="submit" value="Edit" /> <input type="reset"
+				value="Reset" />
+		</p>
+	</form>
+</body>
