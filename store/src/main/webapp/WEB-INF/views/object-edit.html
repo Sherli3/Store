@@ -17,9 +17,11 @@
 		<p>
 			Text game object: <input type="text" th:field="*{text}" />
 		</p>
-
-		<input type="hidden" th:field="*{game.id}" /> <input type="hidden"
-			th:field="*{creatdAt}" />
+		<p>
+			<input type="hidden" th:field="*{game.id}" /> <input type="hidden"
+				th:field="*{creatdAt}" /> <input type="hidden"
+				th:field="*{status}" />
+		</p>
 		<p>
 			<input type="submit" value="Edit" /> <input type="reset"
 				value="Reset" />

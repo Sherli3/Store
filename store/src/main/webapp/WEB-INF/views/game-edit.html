@@ -8,7 +8,7 @@
 </head>
 
 <body>
-	<form action="#" th:action="@{'/games/edit/'+ ${game.id}}"
+	<form action="#" th:action="@{'/admin/games/edit/'+ ${game.id}}"
 		th:object="${game}" method="post">
 		<p>
 			Message: <input type="text" th:field="*{gameName}" />

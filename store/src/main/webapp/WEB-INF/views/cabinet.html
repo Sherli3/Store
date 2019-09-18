@@ -15,7 +15,6 @@
 </head>
 <body>
 	<h1>
-		<a href="/store/games/add">Add another game</a>
 	</h1>
 	<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
 	<table id="emp-table" class="table table-striped table-dark">
@@ -44,7 +43,28 @@
 			</tr>
 		</tbody>
 	</table>
-	<form action="/logout" method="post">
+	<p>All user comments: </p>
+	<table id="emp-table" class="table table-striped table-dark">
+		<thead>
+			<tr>
+				<td>Id</td>
+				<td>created at</td>
+				<td>massage</td>
+				<td>Edit Comment</td>
+
+			</tr>
+		</thead>
+
+
+		<tbody>
+			<tr th:each="listComment: ${listComment}">
+				<td th:text="${list.id}" />
+				<td th:text="${list.createdAt}" />
+				<td th:text="${list.message}" />
+			</tr>
+		</tbody>
+	</table>
+	<form action="/user/logout" method="post">
 		<input value="Logout" type="submit">
 	</form>
 </body>
