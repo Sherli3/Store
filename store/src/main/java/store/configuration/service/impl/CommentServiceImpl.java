@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import store.configuration.model.Comment;
 import store.configuration.model.GameObject;
+import store.configuration.model.User;
 import store.configuration.service.CommentService;
 import store.configuration.repository.CommentRepository;
 
@@ -42,6 +43,16 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> findAllCommentsByObjectId(GameObject objectId) {
 		return commentRepository.findAllCommentsByObjectId(objectId);
+	}
+
+	@Override
+	public List<Comment> findAllCommentFormUser(User user) {
+		return commentRepository.findAllCommentFormUser(user);
+	}
+
+	@Override
+	public List<Comment> findAllUnapprovedComments() {
+		return commentRepository.findAllUnapprovedComments();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import store.configuration.model.Comment;
 import store.configuration.model.GameObject;
+import store.configuration.model.User;
 
 public interface CommentService {
 
@@ -16,6 +17,10 @@ public interface CommentService {
 
 	public List<Comment> findAllApprovedComments();
 
-	List<Comment> findAllCommentsByObjectId(GameObject objectId);
+	public List<Comment> findAllUnapprovedComments();
+
+	public List<Comment> findAllCommentsByObjectId(GameObject objectId);
+
+	public List<Comment> findAllCommentFormUser(User user);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import store.configuration.model.Comment;
 import store.configuration.model.GameObject;
+import store.configuration.model.User;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
@@ -20,5 +21,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 	@Query("SELECT c FROM Comment c WHERE c.gameObject = ?1 and c.approved = 1")
 	List<Comment> findAllCommentsByObjectId(GameObject objectId);
+
+	@Query("SELECT c FROM Comment c WHERE c.approved = 1 and c.author=?1")
+	List<Comment> findAllCommentFormUser(User user);
 
 }
