@@ -36,13 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/games/list", "/user/login", "/user/registration").permitAll()
-				.antMatchers("/user/**").hasAuthority("USER").antMatchers("/trader/**").hasAnyAuthority("TRADER")
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated().and().formLogin()
-				.loginPage("/user/login").failureUrl("/login?error=true").defaultSuccessUrl("/user/cabinet", true)
-				.usernameParameter("email").passwordParameter("password").and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/games/list").and()
-				.exceptionHandling().accessDeniedPage("/access-denied");
+		http.authorizeRequests().antMatchers("/games/list", "/user/login", "/user/registration", "/activate/*")
+				.permitAll().antMatchers("/user/*", "/comment/*").hasAuthority("USER").antMatchers("/trader/**", "/comment/*")
+				.hasAnyAuthority("TRADER").antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()
+				.and().formLogin().loginPage("/user/login").failureUrl("/login?error=true")
+				.defaultSuccessUrl("/user/cabinet", true).usernameParameter("email").passwordParameter("password").and()
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/games/list")
+				.and().exceptionHandling().accessDeniedPage("/access-denied");
 		http.csrf().disable();
 
 	}
