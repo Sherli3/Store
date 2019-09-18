@@ -12,9 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(exclude = { "message", "createdAt", "approved" })
@@ -27,6 +28,7 @@ public class Comment {
 	private int id;
 	@Column(name = "message", columnDefinition = "TEXT")
 	@NotEmpty(message = "*Please write something")
+	@Length(min = 4, message = "*Your comment must have at least 4 characters")
 	private String message;
 	@Column(name = "created_at")
 	private Timestamp createdAt;
@@ -35,5 +37,8 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "object_id")
 	private GameObject gameObject;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User author;
 
 }
