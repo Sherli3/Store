@@ -10,28 +10,13 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
-<title>Insert title here</title>
+<title>Game list</title>
 </head>
 <body>
-	<!--  <script th:inline="javascript">
-		/*<![CDATA[*/
-
-		$(document).ready(function() {
-			var table = $('#emp-table').DataTable({
-				"sAjaxSource" : "/games/list",
-				"sAjaxDataProp" : "",
-				"order" : [ [ 0, "asc" ] ],
-				"aoColumns" : [ {
-					"mData" : "id"
-				}, {
-					"mData" : "gameName"
-				},
-
-				]
-			})
-		});
-	</script>-->
+<p>All games:</p>
 	<table id="emp-table" class="table table-striped table-dark">
 		<thead>
 			<tr>
@@ -41,7 +26,7 @@
 			</tr>
 		</thead>
 
-		<tbody>
+ 		<tbody>
 			<tr th:each="list: ${list}">
 				<td th:text="${list.id}" />
 				<td th:text="${list.gameName}" />

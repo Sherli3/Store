@@ -71,7 +71,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/list/object/unverified")
-	public String listGames(Model model) {
+	public String listGamesUnverified(Model model) {
 		List<GameObject> listObject = gameObjectService.findAllUnverifiedObjects();
 		model.addAttribute("listObject", listObject);
 		return "object-list";

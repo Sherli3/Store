@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -31,6 +32,13 @@ public class MailConfiguration {
 		javaMailProperties.put("mail.transport.protocol", env.getProperty("application.mail.transport.protocol"));
 		mailSender.setJavaMailProperties(javaMailProperties);
 		return mailSender;
+	}
+
+	@Bean
+	public ResourceBundleMessageSource messageSource() {
+		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasenames("messages");
+		return messageSource;
 	}
 
 }

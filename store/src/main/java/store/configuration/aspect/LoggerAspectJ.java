@@ -1,4 +1,4 @@
-package store.configuration.acpect;
+package store.configuration.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
