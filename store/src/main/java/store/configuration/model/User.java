@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(exclude = { "id", "firstName", "lastName", "password", "createdAt", "userRoles", "token",
-		"resetToken","gameObject" })
+		"gameObject" })
 @Entity
 @Table(name = "user")
 public class User {
@@ -55,13 +55,11 @@ public class User {
 	@JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<Role> userRoles;
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<GameObject> gameObject;
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private UserVerificationToken token;
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	private PasswordResetToken resetToken;
 
 }
