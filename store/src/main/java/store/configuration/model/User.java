@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -25,7 +26,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(exclude = { "id", "firstName", "lastName", "password", "createdAt", "userRoles" })
+@EqualsAndHashCode(exclude = { "id", "firstName", "lastName", "password", "createdAt", "userRoles", "token",
+		"resetToken","gameObject" })
 @Entity
 @Table(name = "user")
 public class User {
@@ -55,7 +57,11 @@ public class User {
 	private Set<Role> userRoles;
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
 	private List<GameObject> gameObject;
-	private String activeCode;
-	private boolean active;
+	@Column(name = "enabled", nullable = false)
+	private Boolean enabled;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private UserVerificationToken token;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private PasswordResetToken resetToken;
 
 }

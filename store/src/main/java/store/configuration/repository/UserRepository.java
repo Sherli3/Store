@@ -1,5 +1,7 @@
 package store.configuration.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +11,6 @@ import store.configuration.model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	public User findByEmail(String email);
-
-	public User findByActiveCode(String code);
+	public Optional<User> getById(Long id);
 
 }
