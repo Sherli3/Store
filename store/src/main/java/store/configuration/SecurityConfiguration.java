@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -36,13 +38,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/games/list", "/user/login", "/user/registration", "/activate/*")
-				.permitAll().antMatchers("/user/*", "/comment/*").hasAuthority("USER").antMatchers("/trader/**", "/comment/*")
-				.hasAnyAuthority("TRADER").antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()
-				.and().formLogin().loginPage("/user/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/user/cabinet", true).usernameParameter("email").passwordParameter("password").and()
-				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/games/list")
-				.and().exceptionHandling().accessDeniedPage("/access-denied");
+		http.authorizeRequests()
+				.antMatchers("/games/list", "/user/login", "/user/registration", "/user/registration/*", "/activate/*",
+						"/user/resetPassword", "/user/changePassword", "/user/savePassword")
+				.permitAll().antMatchers("/user/*", "/comment/*").hasAuthority("USER")
+				.antMatchers("/trader/**").hasAnyAuthority("TRADER").antMatchers("/admin/**")
+				.hasAuthority("ADMIN").anyRequest().authenticated().and().formLogin().loginPage("/user/login")
+				.failureUrl("/login?error=true").defaultSuccessUrl("/cabinet", true).usernameParameter("email")
+				.passwordParameter("password").and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/games/list").and()
+				.exceptionHandling().accessDeniedPage("/access-denied");
 		http.csrf().disable();
 
 	}
@@ -56,6 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
 	}
 
 }
