@@ -49,9 +49,5 @@ public class GameController {
 		model.addAttribute("listComment", list);
 		return "object-comment";
 	}
-	/*
-	 * @RequestMapping(path="/list", method=RequestMethod.GET) public List<Game>
-	 * getAllGame(){ return gameService.getGames(); }
-	 */
 
 }

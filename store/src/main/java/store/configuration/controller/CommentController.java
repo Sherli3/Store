@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +37,7 @@ public class CommentController {
 	private UserService userService;
 	private Date date = new Date();
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
 	public ModelAndView createCommentToGameObject(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView("");
@@ -46,13 +48,13 @@ public class CommentController {
 			modelAndView.addObject("newComment", newComment);
 			modelAndView.setViewName("add-comment");
 			return modelAndView;
-
 		}
 
 		modelAndView.setViewName("error");
 		return modelAndView;
 	}
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping(path = "/addComment", method = RequestMethod.POST)
 	public String saveNewComment(@Valid Comment newComment, BindingResult result, Model model, Principal principal) {
 		if (result.hasErrors()) {
@@ -69,12 +71,14 @@ public class CommentController {
 		return "redirect:/games/list/";
 	}
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editGameGet(@PathVariable("id") Integer id, Model model) {
 		commentService.getCommentById(id).ifPresent(comment -> model.addAttribute("comment", comment));
 		return "comment-edit";
 	}
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
 	public String editComment(@Valid @ModelAttribute("comment") Comment comment, BindingResult result) {
 		if (result.hasErrors()) {
@@ -84,6 +88,7 @@ public class CommentController {
 		return "redirect:/object/list/";
 	}
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping(path = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteCommen(@PathVariable("id") Integer id) {
 		Optional<Comment> comment = commentService.getCommentById(id);
@@ -91,6 +96,7 @@ public class CommentController {
 		return "redirect:/object/list/";
 	}
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping("/list")
 	public String listComment(Model model) {
 		List<Comment> listComment = commentService.findAllApprovedComments();
@@ -98,6 +104,7 @@ public class CommentController {
 		return "comment-list";
 	}
 
+	@Secured({ "USER", "TRADER" })
 	@RequestMapping(path = "/list/{id}", method = RequestMethod.GET)
 	public String objectListComments(@PathVariable("id") Integer id, Model model) {
 		Optional<GameObject> findGameObject = gameObjectService.getGameObject(id);
