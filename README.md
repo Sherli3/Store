@@ -1,6 +1,2 @@
 # Store
-The aim of the project is to give an independent rating to traders
-game items (CS:GO, Fifa, Dota, Team Fortress, etc.). Rating is based on
-reviews that offer everyone, while reviews are thorough
-verification by authorized persons. The overall top is based on these rankings
-traders in a particular category of games.
+The project store is designed for game traders and users who can write comments about the trader and his games. Implemented the ability to administrator can add games and trader his description for these games. User have ability to write,edit, delete comments, add suggestions(trader). Registration is via email and password reset too. Administrator approve comments and traders description.
