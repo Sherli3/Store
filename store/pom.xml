@@ -20,7 +20,7 @@
 		<com.sun.mail>1.6.2</com.sun.mail>
 		<aspectj.version>1.9.1</aspectj.version>
 		<org.mockito.core>2.10.0</org.mockito.core>
-		<junit>4.12</junit>
+		<junit>4.13.1</junit>
 		<com.jayway.jsonpath>2.4.0</com.jayway.jsonpath>
 	</properties>
 	<!-- Spring core and MVC -->
