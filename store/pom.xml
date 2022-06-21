@@ -15,7 +15,7 @@
 		<hibernate.version>5.4.2.Final</hibernate.version>
 		<hibernate.validator>6.0.17.Final</hibernate.validator>
 		<spring-data-version>2.1.8.RELEASE</spring-data-version>
-		<mysql-connector-version>8.0.15</mysql-connector-version>
+		<mysql-connector-version>8.0.28</mysql-connector-version>
 		<javax.mail>1.6.2</javax.mail>
 		<com.sun.mail>1.6.2</com.sun.mail>
 		<aspectj.version>1.9.1</aspectj.version>
